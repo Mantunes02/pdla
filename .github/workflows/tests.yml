@@ -1,0 +1,37 @@
+
+name: Python Tests
+
+# Déclenche le workflow lors d'un push
+# ou d'une Pull Request vers main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Récupération du code source
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Installation de Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Installation de uv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      # Installation des dépendances
+      - name: Install dependencies
+        run: uv sync --locked
+
+      # Exécution des tests
+      - name: Run tests
+        run: uv run pytest
