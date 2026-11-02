@@ -1,0 +1,34 @@
+
+name: Linters and Type Checkers
+
+# Exécuter le workflow à chaque push et Pull Request
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Récupérer le repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Installer Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Installer uv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      # Installer les dépendances
+      - name: Install dependencies
+        run: uv sync --locked
+
+      # Exécuter Ruff, le formatage et ty
+      - name: Run linters and type checkers
+        run: uv run poe check

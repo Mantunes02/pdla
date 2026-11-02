@@ -19,7 +19,8 @@ def main(filepath: Path) -> None:
             click.echo(result)
     except ParserException as e:
         click.echo(
-            f"Error in script '{filepath}' at line {e.context.line} column {e.context.column} '{e.context.source}': {e}'"
+            f"Error in script '{filepath}' at line {e.context.line} "
+            f"column {e.context.column} '{e.context.source}': {e}'"
         )
 
 
